@@ -48,7 +48,14 @@
       justify-content: space-between;
       align-items: center;
       gap: 16px;
-      margin-bottom: 12px;
+      margin-bottom: 24px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(255, 247, 240, 0.95);
+      backdrop-filter: blur(5px);
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
     }
 
     .brand {
@@ -312,13 +319,9 @@
         grid-template-columns: 1fr;
       }
 
-      .search {
-        width: 100%;
-      }
-
       .sidebar {
-        position: relative;
-        top: auto;
+        display: none;
+        /* Hide by default on tablet/mobile until toggled */
       }
     }
 
@@ -327,18 +330,35 @@
     }
 
     @media (max-width: 768px) {
+      header {
+        flex-wrap: wrap;
+      }
+
+      .brand {
+        flex: 1;
+      }
+
+      /* Search moves to next row and takes full width */
+      .search {
+        order: 3;
+        width: 100%;
+        margin-top: 8px;
+      }
+
       #menu-btn {
         display: block;
       }
 
       .sidebar {
+        display: block;
+        /* Restore display for fixed positioning */
         position: fixed;
         left: -100%;
         top: 0;
         bottom: 0;
         width: 280px;
         background: white;
-        z-index: 1000;
+        z-index: 2000;
         padding: 20px;
         box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
         transition: 0.3s;
@@ -347,6 +367,10 @@
 
       .sidebar.active {
         left: 0;
+      }
+
+      #close-sidebar-btn {
+        display: block !important;
       }
     }
   </style>
@@ -364,6 +388,7 @@
         </div>
       </div>
       <div class="controls" aria-hidden="false">
+        <button class="icon-btn" title="menu" id="menu-btn"><i class="fa fa-bars"></i></button>
         <div class="search" role="search">
           <i class="fa fa-magnifying-glass" style="opacity:.7"></i>
           <input type="search" id="search-input" placeholder="Search dishes, cuisines, or restaurants..." />
@@ -400,9 +425,13 @@
 
     <!-- Right column: sidebar cart -->
     <aside class="sidebar" aria-label="Cart & Filters">
-      <div class="cart-head">
-        <strong>Cart</strong>
-        <span style="font-size:13px;color:#666" id="cart-count">0 items</span>
+      <div class="cart-head" style="display:flex;justify-content:space-between;align-items:center;">
+        <div>
+          <strong>Cart</strong>
+          <span style="font-size:13px;color:#666" id="cart-count">0 items</span>
+        </div>
+        <button id="close-sidebar-btn"
+          style="background:none;border:none;font-size:20px;cursor:pointer;display:none;">&times;</button>
       </div>
       <div id="cart-items-container" style="max-height: 200px; overflow-y: auto; margin: 10px 0; font-size: 13px;">
         <!-- Cart items list -->
