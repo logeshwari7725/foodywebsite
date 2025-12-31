@@ -317,6 +317,15 @@ function removeFromCart(index) {
     updateCartUI();
 }
 
+// Sidebar Close Logic
+const closeSidebarBtn = document.getElementById('close-sidebar-btn');
+if (closeSidebarBtn) {
+    closeSidebarBtn.addEventListener('click', () => {
+        document.querySelector('.sidebar').classList.remove('active');
+    });
+}
+
+
 function toggleFavorite(id) {
     id = Number(id);
     const index = favorites.indexOf(id);
@@ -584,3 +593,4 @@ if (checkoutBtn) {
 window.login = login;
 window.logout = logout;
 window.closeModal = closeModal;
+
