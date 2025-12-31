@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Foody</title>
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Lobster&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity=""
+    crossorigin="anonymous">
+  <style>
+    /* ===== Page reset ===== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #fff7f0 0%, #f0f7ff 50%, #f7fff0 100%);
+      -webkit-font-smoothing: antialiased;
+      color: #222;
+      line-height: 1.15;
+      padding: 24px;
+    }
+
+    /* ===== Layout ===== */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 24px;
+      align-items: start;
+    }
+
+    header {
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 12px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo {
+      display: inline-grid;
+      place-items: center;
+      width: 64px;
+      height: 64px;
+      border-radius: 12px;
+      background: conic-gradient(from 120deg, #ff7aa2, #ffd166, #6ee7b7, #6ec1ff);
+      box-shadow: 0 6px 18px rgba(30, 30, 60, 0.12);
+      color: white;
+      font-family: "Lobster", cursive;
+      font-size: 26px;
+      letter-spacing: 0.5px;
+    }
+
+    h1 {
+      font-size: 20px;
+      color: #111;
+    }
+
+    header .controls {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .search {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 12px;
+      padding: 8px 12px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      width: 420px;
+      box-shadow: 0 6px 18px rgba(50, 50, 93, 0.07);
+      border: 1px solid rgba(0, 0, 0, 0.04);
+    }
+
+    .search input {
+      border: 0;
+      outline: none;
+      font-size: 14px;
+      background: transparent;
+      width: 100%;
+    }
+
+    .icon-btn {
+      background: linear-gradient(180deg, #ffffffcc, #ffffffaa);
+      padding: 10px;
+      border-radius: 10px;
+      border: 0;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+    }
+
+    /* ===== Hero / Featured ===== */
+    .hero {
+      background: linear-gradient(90deg, rgba(255, 122, 162, 0.08), rgba(102, 204, 255, 0.06));
+      border-radius: 14px;
+      padding: 18px;
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      margin-bottom: 14px;
+      box-shadow: 0 8px 20px rgba(50, 50, 93, 0.06);
+    }
+
+    .hero .left {
+      flex: 1;
+    }
+
+    .hero h2 {
+      font-family: "Lobster", cursive;
+      font-size: 28px;
+      color: #2b2b52;
+      margin-bottom: 6px;
+    }
+
+    .hero p {
+      font-size: 14px;
+      color: #444;
+      margin-bottom: 8px;
+    }
+
+    .hero .cta {
+      display: inline-block;
+      padding: 10px 14px;
+      border-radius: 10px;
+      background: #ff7aa2;
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .hero .img-wrap {
+      width: 160px;
+      height: 120px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(60, 60, 100, 0.08);
+      border: 6px solid rgba(255, 255, 255, 0.35);
+      transform: rotate(-6deg);
+      background: linear-gradient(135deg, #ffe6f0, #fff7e6);
+    }
+
+    .hero .img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* ===== Products grid ===== */
+    .products {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.9));
+      border-radius: 14px;
+      padding: 16px;
+      box-shadow: 0 10px 30px rgba(30, 30, 60, 0.04);
+      min-height: 420px;
+      overflow: auto;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: transform .22s ease, box-shadow .22s ease;
+      border: 1px solid rgba(0, 0, 0, 0.03);
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 14px 40px rgba(30, 30, 60, 0.08);
+    }
+
+    .img {
+      height: 140px;
+      border-radius: 10px;
+      overflow: hidden;
+      display: block;
+      background: linear-gradient(45deg, #fde68a, #fca5a5);
+    }
+
+    .img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .meta h3 {
+      font-size: 15px;
+      color: #151515;
+    }
+
+    .price {
+      font-weight: 700;
+      color: #ff6b81;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 6px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      background: linear-gradient(90deg, #6ee7b7, #6ec1ff);
+      color: #064e3b;
+    }
+
+    .card .actions {
+      margin-top: auto;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 10px;
+      border-radius: 10px;
+      border: 0;
+      cursor: pointer;
+      font-weight: 600;
+      background: linear-gradient(90deg, #6ec1ff, #7ee7d9);
+    }
+
+    .outline-btn {
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px dashed rgba(0, 0, 0, 0.08);
+      background: transparent;
+      color: #333;
+      cursor: pointer;
+    }
+
+    /* ===== Footer ===== */
+    footer {
+      grid-column: 1 / -1;
+      margin-top: 18px;
+      text-align: center;
+      color: #444;
+      font-size: 13px;
+    }
+
+    /* ===== Custom scrollbar (Webkit) ===== */
+    .products::-webkit-scrollbar,
+    .cart-items::-webkit-scrollbar,
+    .products::-webkit-scrollbar-thumb {
+      width: 12px;
+      height: 12px;
+    }
+
+    .products::-webkit-scrollbar-track,
+    .cart-items::-webkit-scrollbar-track {
+      background: linear-gradient(#fff0, #fff0);
+      border-radius: 12px;
+    }
+
+    .products::-webkit-scrollbar-thumb,
+    .cart-items::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, #ffd166, #ff7aa2);
+      border-radius: 10px;
+      border: 3px solid rgba(255, 255, 255, 0.6);
+      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.08);
+    }
+
+    /* ===== Scrollbar for firefox ===== */
+    .products,
+    .cart-items {
+      scrollbar-width: thin;
+      scrollbar-color: #ff7aa2 rgba(0, 0, 0, 0.05);
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 980px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+
+      .search {
+        width: 100%;
+      }
+
+      .sidebar {
+        position: relative;
+        top: auto;
+      }
+    }
+
+    #menu-btn {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      #menu-btn {
+        display: block;
+      }
+
+      .sidebar {
+        position: fixed;
+        left: -100%;
+        top: 0;
+        bottom: 0;
+        width: 280px;
+        background: white;
+        z-index: 1000;
+        padding: 20px;
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+        transition: 0.3s;
+        overflow-y: auto;
+      }
+
+      .sidebar.active {
+        left: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <div class="brand">
+        <div class="logo">F</div>
+        <div>
+          <h1>Foody</h1>
+          <div style="font-size:12px;color:#666;">Fresh eats • Fast delivery</div>
+        </div>
+      </div>
+      <div class="controls" aria-hidden="false">
+        <div class="search" role="search">
+          <i class="fa fa-magnifying-glass" style="opacity:.7"></i>
+          <input type="search" id="search-input" placeholder="Search dishes, cuisines, or restaurants..." />
+          <button class="icon-btn" title="filter" id="filter-btn"><i class="fa fa-sliders"></i></button>
+        </div>
+
+        <button class="icon-btn" title="home" id="home-btn"><i class="fa fa-home"></i></button>
+        <button class="icon-btn" title="favorites"><i class="fa fa-heart"></i></button>
+        <button class="icon-btn" title="account"><i class="fa fa-user"></i></button>
+        <button class="icon-btn" title="cart" id="cart-btn"><i class="fa fa-shopping-bag"></i> <span id="cart-badge"
+            style="display:none;font-size:10px;background:red;color:white;border-radius:50%;padding:2px 4px;vertical-align:top;">0</span></button>
+      </div>
+    </header>
+    <!-- Left column: hero + products -->
+    <main>
+      <section class="hero" aria-label="Featured">
+        <div class="left">
+          <h2>Delicious meals — delivered to your door</h2>
+          <p>Explore colourful dishes from local chefs. Hot & fresh, ready in minutes. Try our chef's specials today!
+          </p>
+          <a class="cta" href="#shop">Order Now</a>
+        </div>
+      </section>
+      <section id="shop" class="products" aria-label="Products">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+          <strong style="font-size:16px">Popular Dishes</strong>
+          <span style="font-size:13px;color:#666" id="items-count">Showing 0 items</span>
+        </div>
+        <div class="products-grid" id="products-grid">
+          <!-- Products will be rendered here by script.js -->
+        </div>
+      </section>
+    </main>
+
+    <!-- Right column: sidebar cart -->
+    <aside class="sidebar" aria-label="Cart & Filters">
+      <div class="cart-head">
+        <strong>Cart</strong>
+        <span style="font-size:13px;color:#666" id="cart-count">0 items</span>
+      </div>
+      <div id="cart-items-container" style="max-height: 200px; overflow-y: auto; margin: 10px 0; font-size: 13px;">
+        <!-- Cart items list -->
+        <p style="color:#888; text-align:center;">Your cart is empty</p>
+      </div>
+      <div class="total">Total: <span id="cart-total">₹0</span></div>
+      <button class="btn checkout" id="checkout-btn" style="width:100%;margin-top:10px;"><i
+          class="fa fa-check-circle"></i> Confirm Order</button>
+
+      <hr style="margin:14px 0;border:none;border-top:1px dashed rgba(0,0,0,0.06)">
+
+      <div style="font-size:13px;color:#444;font-weight:700;margin-bottom:8px;">Filters</div>
+      <div style="display:flex;flex-direction:column;gap:8px;" id="filters">
+        <button class="outline-btn" data-filter="veg">Veg</button>
+        <button class="outline-btn" data-filter="non-veg">Non-Veg</button>
+        <button class="outline-btn" data-filter="under-300">Under ₹300</button>
+        <button class="outline-btn" data-filter="all">Show All</button>
+      </div>
+    </aside>
+
+    <footer>
+      © <strong>Foody</strong> — Colourful food marketplace • Built with ❤
+    </footer>
+
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toast-container"
+    style="position:fixed;bottom:20px;right:20px;display:flex;flex-direction:column;gap:10px;z-index:1000;"></div>
+
+  <!-- Product Details Modal -->
+  <div id="product-modal"
+    style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:2000;justify-content:center;align-items:center;">
+    <div style="background:white;padding:20px;border-radius:12px;max-width:500px;width:90%;position:relative;">
+      <button onclick="closeModal()"
+        style="position:absolute;top:10px;right:10px;border:none;background:transparent;font-size:20px;cursor:pointer;">&times;</button>
+      <div id="modal-content"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
